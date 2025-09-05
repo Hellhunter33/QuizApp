@@ -264,25 +264,36 @@ const QuizResults = ({
         </motion.div>
       )}
 
-      {highScores.length > 0 && (
-        <motion.div className="leaderboard" variants={itemVariants}>
-          <h3>🏆 Leaderboard - {category} ({difficulty})</h3>
-          <div className="scores-list">
-            {highScores.map((score, index) => (
-              <div key={score.id} className={`score-item ${index === 0 ? 'first' : ''}`}>
-                <div className="rank">#{index + 1}</div>
-                <div className="player-info">
-                  <div className="player-name">{score.playerName}</div>
-                  <div className="score-details">
-                    {score.score}/{score.totalQuestions} ({score.percentage}%) - {formatTime(score.timeSpent)}
+      <div className="leaderboard-container">
+        <h2>Leaderboard</h2>
+        <table className="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>User</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {highScores.map((score, idx) => (
+              <tr key={score.username} className={idx === 0 ? 'top-scorer' : ''}>
+                <td>{idx + 1}</td>
+                <td>
+                  <div className="user-info">
+                    <img
+                      src={`https://api.dicebear.com/7.x/identicon/svg?seed=${score.username}`}
+                      alt="avatar"
+                      className="avatar"
+                    />
+                    <span>{score.username}</span>
                   </div>
-                </div>
-                {index === 0 && <Crown className="crown-icon" />}
-              </div>
+                </td>
+                <td>{score.score}</td>
+              </tr>
             ))}
-          </div>
-        </motion.div>
-      )}
+          </tbody>
+        </table>
+      </div>
 
       <motion.div className="results-actions" variants={itemVariants}>
         <button className="restart-button" onClick={onRestart}>
