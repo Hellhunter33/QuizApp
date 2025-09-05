@@ -276,19 +276,19 @@ const QuizResults = ({
           </thead>
           <tbody>
             {highScores.map((score, idx) => (
-              <tr key={score.username} className={idx === 0 ? 'top-scorer' : ''}>
+              <tr key={score.playerName || `score-${idx}`} className={idx === 0 ? 'top-scorer' : ''}>
                 <td>{idx + 1}</td>
                 <td>
                   <div className="user-info">
                     <img
-                      src={`https://api.dicebear.com/7.x/identicon/svg?seed=${score.username}`}
+                      src={`https://api.dicebear.com/7.x/identicon/svg?seed=${score.playerName || 'anonymous'}`}
                       alt="avatar"
                       className="avatar"
                     />
-                    <span>{score.username}</span>
+                    <span>{score.playerName || 'Anonymous'}</span>
                   </div>
                 </td>
-                <td>{score.score}</td>
+                <td>{score.score}/{score.totalQuestions || '?'}</td>
               </tr>
             ))}
           </tbody>
